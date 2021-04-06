@@ -25,7 +25,7 @@ class packagesModelAdmin(admin.ModelAdmin):
 class importexportdata_admin(admin.ModelAdmin):
     change_list_template = 'admin/change_list_btn.html'
     import_template_name = 'upload_csv.html'
-
+    # list_display = ('__all__',)
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
 

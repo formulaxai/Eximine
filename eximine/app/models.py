@@ -158,7 +158,7 @@ class countries(models.Model):
     createdate = models.DateField(null=True)
     
     class Meta:
-        verbose_name_plural = "Country Master"
+        verbose_name_plural = "countries"
 
 class companies(models.Model):
     

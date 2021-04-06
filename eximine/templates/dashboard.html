@@ -288,22 +288,25 @@ $.typeahead({
 						<div class="container bg-light p-3">
 							<div class="row">
 								<div class="col-md-6">
-									<form action="">
+									<form action="{% url 'advance_search' %}" method="GET">
+									{% csrf_token %}
 										<div class="from-group">
 											<label for="select_country" style='font-weight: bold;'>Select
 												Country &nbsp;&nbsp;
 												<i class='icon-help'></i></label>
 											<select class='form-control' name="select_country"
 												id="select_country">
-												<option value="">Select Country</option>
+												{% for i in countries_object %}
+													<option value="{{i.title}}">{{i.title}}</option>
+												{% endfor %}
 											</select><br>
 										</div>
 										<div class="from-group row g-2">
 											<div class="col-md-4">
-												<label for="select_country"
+												<label for="select_period"
 													style='font-weight: bold;'>Period</label>
-												<select class='form-control' name="select_country"
-													id="select_country">
+												<select class='form-control' name="select_period"
+													id="select_period">
 													<option value="">Last 30 Days</option>
 												</select>
 											</div>
@@ -323,18 +326,18 @@ $.typeahead({
 										</div><Br>
 										<div class="from-group row g-2">
 											<div class="col-md-4">
-												<label for="select_country" style='font-weight: bold;'>Search
+												<label for="select_search_field" style='font-weight: bold;'>Search
 													Field</label>
-												<select class='form-control' name="select_country"
-													id="select_country">
+												<select class='form-control' name="select_search_field"
+													id="select_search_field">
 													<option value="">Last 30 Days</option>
 												</select>
 											</div>
 											<div class="col-md-4">
-												<label for="select_country"
+												<label for="select_operator"
 													style='font-weight: bold;'>Operator</label>
-												<select class='form-control' name="select_country"
-													id="select_country">
+												<select class='form-control' name="select_operator"
+													id="select_operator">
 													<option value="">Last 30 Days</option>
 												</select>
 											</div>
@@ -348,8 +351,8 @@ $.typeahead({
 										</div>
 										<div class='mt-2'>
 											<a type="#" class="btn btn-dark text-light">Reset</a>
-											<input type="Submit" value='Search'
-												class='btn btn-warning warning_bg'>
+												<input type="Submit" value='Search'
+													class='btn btn-warning warning_bg'>
 										</div>
 									</form>
 								</div>

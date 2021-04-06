@@ -84,9 +84,10 @@ def dashboard(request):
     if 'id' not in request.session:
         messages.error(request,'Please login first!')
         return redirect("login")
-    
+    countries_object = countries.objects.all().distinct()
+    print("countries_object", countries_object)
     data = registrations.objects.get(id=request.session['id'])
-    return render(request, 'dashboard.html', {"data":data})
+    return render(request, 'dashboard.html', {"data":data, 'countries_object': countries_object})
 
 def register(request,pk=None):
 
@@ -432,36 +433,30 @@ def search(request):
     return render(request, 'search.html', {'data':data, 'all_data':all_data, 'paginator':paginator, 'export_count':export_count, 'import_count':import_count})
 
 def advancesearch(request):
-    
+    filter = {}
     if 'id' not in request.session:
         messages.error(request,'Please login first!')
         return redirect("login")
+    select_country = request.GET.get('select_country')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    
+    # filter['COUNTRY'] = 'India'
+    filter['COUNTRY'] = select_country
+    if start_date and end_date:
+        filter['DATE__range'] = [start_date, end_date]
+    # DATE__range=["2020-11-15", "2020-11-20"]
 
-    filter_names = ('COUNTRY',)
-
-    # select_country=request.data.GET['']
-
-    filter_clauses = [Q(**{filter: request.GET[filter]})
-                    for filter in filter_names
-                    if request.GET.get(filter)]
-
-    export_count = importexportdata.objects.filter(TYPE='EXPORT')
-    if filter_clauses:
-        export_count = export_count.filter(reduce(operator.and_, filter_clauses))
-    export_count = export_count.count()
+    print("filter", filter)
+    export_count = importexportdata.objects.filter(TYPE='EXPORT', **filter).count()
     if export_count == '':
         export_count = 0
     
-    import_count = importexportdata.objects.filter(TYPE='IMPORT')
-    if filter_clauses:
-        import_count = import_count.filter(reduce(operator.and_, filter_clauses))
-    import_count = import_count.count()
+    import_count = importexportdata.objects.filter(TYPE='IMPORT', **filter).count()
     if import_count == '':
         import_count = 0
 
-    data_list = importexportdata.objects.all().order_by('-id')
-    if filter_clauses:
-        data_list = data_list.filter(reduce(operator.and_, filter_clauses))
+    data_list = importexportdata.objects.filter(**filter).order_by('-id')
     paginator = Paginator(data_list, 50) # Show 50 records per page.
 
     page_number = request.GET.get('page')
@@ -531,14 +526,15 @@ def exportdata(request):
         
         # Define the data for each cell in the row 
         row = [
-            unescape(data.TYPE),
-            unescape(data.DATE),
-            unescape(data.MONTH),
-            unescape(data.YEAR),
-            unescape(data.HS_CODE),
-            unescape(data.TWO_DIGIT),
-            unescape(data.FOUR_DIGIT),
+            unescape(data.TYPE) if data.TYPE else '',
+            unescape(data.DATE) if data.DATE else '',
+            unescape(data.MONTH) if data.MONTH else '',
+            unescape(data.YEAR) if data.YEAR else '',
+            unescape(data.HS_CODE) if data.HS_CODE else '',
+            unescape(data.TWO_DIGIT) if data.TWO_DIGIT else '',
+            unescape(data.FOUR_DIGIT) if data.FOUR_DIGIT else '',
         ]
+        print('row', row)
         
         # Assign the data for each cell of the row 
         for col_num, cell_value in enumerate(row, 1):
@@ -571,7 +567,7 @@ def upload_csv(request):
             #     return csv_file
             csv_file = io.TextIOWrapper(form.cleaned_data['csv_file'])
             reader = csv.reader(csv_file, delimiter=',')
-            # reader = csv.DictReader(StringIO(csv_file.read().decode('utf-8')), delimiter=';')
+                                        # reader = csv.DictReader(StringIO(csv_file.read().decode('utf-8')), delimiter=';')
             row =0
             for data in reader:
                 if row==0:
