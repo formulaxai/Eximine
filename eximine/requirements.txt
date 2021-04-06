@@ -1,0 +1,8 @@
+pymysql
+django-import-export
+stripe
+six
+validate_email
+djangorestframework
+cryptography
+django-payments-razorpay

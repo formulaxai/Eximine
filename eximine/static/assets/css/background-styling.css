@@ -1,0 +1,11 @@
+.icon-sprite {
+    display: inline-block!important;
+    background-image: url(/static/media/sprite.42223c20.png);
+    cursor: pointer!important;
+    vertical-align: middle!important;
+}
+.bg-parameters {
+    width: 22px;
+    height: 28px;
+    background: url(../../images/everything.png) -958px -678px;
+}
