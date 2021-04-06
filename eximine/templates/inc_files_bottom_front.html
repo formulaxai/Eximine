@@ -1,0 +1,15 @@
+{% load static %}
+<script type="text/javascript" src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/notify.min.js' %}"></script>
+
+<script type="text/javascript">
+$(window).bind("load", function(){
+    {% if messages %}
+        {% for message in messages %}
+            $.notify("{{ message }}", { className: "{{ message.tags }}", autoHide: true, autoHideDelay: 8000 });
+        {% endfor %}
+    {% endif %}
+});
+</script>

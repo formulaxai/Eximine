@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+{% include 'inc_files.html' %}
+</head>
+<body>
+{% include 'inc_header.html' %}
+
+<div class="page-content">
+
+{% include 'inc_sidebar.html' %}
+
+<!-- Main content -->
+<div class="content-wrapper">
+
+    <!-- Page header -->
+    <div class="page-header page-header-light">
+
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="{% url 'dashboard' %}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <span class="breadcrumb-item active">My Profile</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href="#" class="breadcrumb-elements-item">
+                        <i class="icon-comment-discussion mr-2"></i>
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+        
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item">
+                        <a href="#basic-justified-tab1" class="nav-link active" data-toggle="tab">My Profile</a>
+                    </li>
+                    {% comment %} <li class="nav-item">
+                        <a href="#basic-justified-tab2" class="nav-link" data-toggle="tab">My Team</a>
+                    </li> {% endcomment %}
+                    <!-- <li class="nav-item">
+                        <a href="#basic-justified-tab3" class="nav-link" data-toggle="tab">Trash</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#basic-justified-tab4" class="nav-link" data-toggle="tab">Database Updates</a>
+                    </li> -->
+                    
+        
+                </ul>
+        
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="basic-justified-tab1">
+                        <div class="contianer bg-light p-3">
+                            <h3 class='mb-3'>User Information</h3>
+                            <div class="row">
+                                <div class="col-md-12 d-flex align-items-center">
+                                    <div class='border-2 p-1 rounded-circle'>
+                                        <i class='icon-user icon-2x'></i>
+                                    </div>
+                                    <div class="ml-3">
+                                    {% comment %} {% for d in data %} {% endcomment %}
+                                        <p class='font-weight-bold mb-0'>{{data.fullname}}</p>
+                                        <p class='text-muted'>{{data.email}}</p>
+                                        {% comment %} {% endfor %} {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <form action="{% url 'myprofile' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="id" value="{{ data.id }}" />
+                                        <div class="row g-2">
+                                            <div class="input-group col-md-6 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-user'></i></span>
+                                                </div>
+                                                <input type="text" name="fullname" class="form-control border-bottom-2 border-top-0 border-left-0 border-right-0" placeholder="Full Name" value="{{data.fullname}}" aria-label="Full Name" aria-describedby="basic-addon1" required />
+                                            </div>
+                                            <div class="input-group col-md-6 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-phone2'></i></span>
+                                                </div>
+                                                <input type="text" name="phone_number" class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0" value="+{{ data.country_code }}{{ data.phone_number }}" aria-label="Mobile No." aria-describedby="basic-addon1" readonly />
+                                            </div>
+                                            <div class="input-group col-md-6 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-envelop'></i></span>
+                                                </div>
+                                                <input type="text" name="email" class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0" value="{{data.email}}" aria-label="Email" aria-describedby="basic-addon1" readonly >
+                                            </div>
+                                            <div class="input-group col-md-6 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-office'></i></span>
+                                                </div>
+                                                <input type="text" name="companyname" class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0" value="{{data.companyname}}" aria-label="Company Name" aria-describedby="basic-addon1" required />
+                                            </div>
+                                            <div class="input-group col-md-6 mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-user-tie'></i></span>
+                                                </div>
+                                                <input type="text" name="user_type" class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0" value="{{data.user_type}}" aria-label="Type" aria-describedby="basic-addon1" readonly />
+                                            </div>
+                                            {% if data.user_type == "Other" %}
+                                                <div class="input-group col-md-6 mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text border-0 rounded-circle" id="basic-addon1"><i class='icon-user-tie'></i></span>
+                                                    </div>
+                                                    <input type="text" name="user_type_other" class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0" value="{{data.user_type_other}}" aria-label="Type" aria-describedby="basic-addon1" readonly />
+                                                </div>
+                                            {% else %}
+                                                <input type="hidden" name="user_type_other" value="{{ data.user_type_other }}" />
+                                            {% endif %}
+                                            <div class='col-md-12 d-flex justify-content-end'>
+                                                <input class='custom_btn' type="submit" value='UPDATE' />
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contianer mt-3 bg-light p-3">
+                            <h3 class='mb-3'>My Balance</h3>
+                            <div class="row">
+                                <div class="col-md-3 col-6">
+                                    <div class="d-flex flex-column justify-content-center align-items-center text-center rounded border p-2 w-100">
+                                        <i class='icon-download icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>{{ data.download_points }}/{{ data.download_points_total }}</h3>
+                                        <p>Download Points</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="d-flex flex-column justify-content-center align-items-center text-center rounded border p-2 w-100">
+                                        <i class='icon-search4 icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>{{ data.searches }}/{{ data.searches_total }}</h3>
+                                        <p>Total Searches</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="d-flex flex-column justify-content-center align-items-center text-center rounded border p-2 w-100">
+                                        <i class='icon-office icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>{{ data.hot_products }}/{{ data.hot_products_total }}</h3>
+                                        <p>Searches in Hot Products</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="d-flex flex-column justify-content-center align-items-center text-center rounded border p-2 w-100">
+                                        <i class='icon-search4 icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>{{ data.hot_companies }}/{{ data.hot_companies_total }}</h3>
+                                        <p>Searches in Hot Companies</p>
+                                    </div>
+                                </div>
+                                        
+                            </div>
+                        </div>
+                        {% comment %} <div class="contianer mt-3 bg-light p-3">
+                            <h3 class='mb-3'>My Activities</h3>
+                            <div class="row g-2">
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-users4 icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0 </h3>
+                                        <p>Login count till date</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-office icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>7 </h3>
+                                        <p>Searches in last 30 days</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-server icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0 </h3>
+                                        <p>Points consumed</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-folder icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0</h3>
+                                        <p>Workspace</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-download icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0</h3>
+                                        <p>Downloads</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-ticket icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0 </h3>
+                                        <p>Trouble Tickets</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-heart5 icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0 </h3>
+                                        <p>Favorites Companies</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-bubble icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>0</h3>
+                                        <p>Comments</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2 mb-2">
+                                        <i class='icon-user icon-2x text-muted mb-2'></i>
+                                        <h3 class='mb-0'>2</h3>
+                                        <p>Users Created</p>
+                                    </div>
+                                </div>
+                                        
+                            </div>
+                        </div> {% endcomment %}
+                    </div>
+        
+                    <div class="tab-pane fade" id="basic-justified-tab2">
+                        <div class="contianer mt-3 bg-light p-3">
+                            <div class='d-flex justify-content-between align-items-center' >
+                                <h3 class='mb-3'>Total User Created : 1/10</h3>
+                                <div class="row">
+                                    <a href="" class='btn btn-warning'><i class='icon-user-plus'></i>  Add Member</a>&nbsp;&nbsp;
+                                    <a href="" class='btn btn-light'><i class='icon-bin2'></i> Remove Member</a>                                              
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table table-bordered">
+                                    <thead class='bg-dark'>
+                                        <th>First Name</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Last Login On</th>
+                                        <th>Re-send Link</th>
+                                        <th>Active Subscriptions</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ramesh Gupta</td>
+                                            <td>Desktop Company Admin	</td>
+                                            <td>Active</td>
+                                            <td>pankajnitnaure1@gmail.com</td>
+                                            <td>23-Jan-2021 01:24:00</td>
+                                            <td><a href="#"><i class='icon-redo2'></i>&nbsp;&nbsp;Send Link</a></td>
+                                            <td><a href="#" class='btn btn-warning'>Check your plan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="contianer mt-3 bg-light p-3">
+                            <h3 class='mb-3'>Team Activities</h3>
+                            <div class="row g-2">
+                                <div class="col-md-2 d-flex rounded-0 flex-column justify-content-center align-items-center text-center rounded border p-2">
+                                    <i class='icon-users4 icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>14 </h3>
+                                    <p>Login count till date</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-office icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>7 </h3>
+                                    <p>Searches in last 30 days</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-server icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0 </h3>
+                                    <p>Points consumed</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-folder icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0</h3>
+                                    <p>Workspace</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-download icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0</h3>
+                                    <p>Downloads</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-ticket icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0 </h3>
+                                    <p>Trouble Tickets</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-heart5 icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0 </h3>
+                                    <p>Favorites Companies</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-bubble icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>0</h3>
+                                    <p>Comments</p>
+                                </div>
+                                <div class="col-md-2 rounded-0 d-flex flex-column justify-content-center  align-items-center text-center rounded border p-2">
+                                    <i class='icon-user icon-2x text-muted mb-2'></i>
+                                    <h3 class='mb-0'>2</h3>
+                                    <p>Users Created</p>
+                                </div>
+                                        
+                            </div>
+                    </div>
+        
+                    <!-- <div class="tab-pane fade" id="basic-justified-tab3">
+                        
+                    </div>
+        
+                    <div class="tab-pane fade" id="basic-justified-tab4">
+                        
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /content area -->
+
+</div>
+
+{% include 'inc_footer.html' %}
+</div>
+{% include 'inc_files_bottom.html' %}
+</body>
+</html>

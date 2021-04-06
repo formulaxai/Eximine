@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include 'inc_files_front.html' %}
+</head>
+<body>
+{% include 'inc_header_front.html' %}
+<section class="container-fluid d-flex justify-content-center text-center hero_section p-5"
+	style="flex-direction: column">
+	<div class="container table-container">
+		<h3 class="p-5 pb-2">
+			One Subscription - Multiple Users - 78+ Countries And More Added Every
+			Month!
+		</h3>
+		<p class="pb-2">
+			Honest usage based pricing - irrespective of numbers of countries or
+			users.
+		</p>
+		<div class="table-main-continer">
+			<div class="table-responsive" id="slider-table-container">
+				<table class="table" id="slider-table">
+					<thead class="table-dark bg-warning rounded-3">
+						<th class="p-3">Plans</th>
+
+						{% for data in data %}
+						<th class="p-3">{{data.plan_name}}</th>
+
+						{% endfor %}
+					</thead>
+					<tbody class="bg-light">
+						<tr>
+							<td></td>
+
+							{% for package in data %}
+							<td>
+								<a href="{% url 'register' package.packageid %}"
+									class="btn btn-dark rounded-0">{{package.plan_name}}</a>
+
+							</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Package validity</td>
+							{% for data in data %}
+							<td>{{data.package_validity}} Days</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Price</td>
+							{% for data in data %}
+							<td>&#8377;{{data.price}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Download Points</td>
+							{% for data in data %} {% if data.download_points_perday > 0 %}
+								<td>Unlimited ({{data.download_points_perday}}/ Day)</td>
+							{% else %}
+								<td>{{data.download_points}}</td>
+							{% endif %} {% endfor %}
+						</tr>
+						<tr>
+							<td>Unlimited Data Access</td>
+							{% for data in data %}
+							<td>{{data.unlimited_data_access}} Days</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Searches</td>
+							{% for data in data %}
+							<td>{{data.searches}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Work Spaces</td>
+							{% for data in data %}
+							<td>{{data.work_spaces}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Work Spaces Validity</td>
+							{% for data in data %}
+							<td>{{data.work_spaces_validity}} Days</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Work Spaces Deletion</td>
+							{% for data in data %}
+							<td>{{data.work_spaces_deletion}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Shipment Limit Workspaces</td>
+							{% for data in data %}
+							<td>{{data.shipment_limit_workspaces}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Add On Points Facility</td>
+							{% for data in data %}
+							<td>{{data.addon_points_facility}}</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Hot Products</td>
+							{% for data in data %}
+							<td>
+								{{data.hot_products}} 
+								{% if data.hot_products_interval > 0 %}
+									Per {{data.hot_products_interval}} Days</td>
+								{% endif %}
+							</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>Hot Companies</td>
+							{% for data in data %}
+							<td>
+								{{data.hot_companies}}
+								{% if data.hot_companies_interval > 0 %}
+									Per {{data.hot_companies_interval}} Days</td>
+								{% endif %}
+							</td>
+							{% endfor %}
+						</tr>
+						<tr>
+							<td>User</td>
+							{% for data in data %}
+							<td>{{data.allowed_users}} User</td>
+							{% endfor %}
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="slider-right d-flex justify-content-center align-items-center">
+				<i class="fas fa-chevron-right"></i>
+			</div>
+			<div class="slider-left d-flex justify-content-center align-items-center">
+				<i class="fas fa-chevron-left"></i>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="container d-flex flex-column justify-content-center algin-items-center text-center p-5">
+	<h2>FAQ</h2>
+	<p>(Frequently asked questions)</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="accordion rounded-0" id="accordionExample">
+				{% for faq_data in faq_data %}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="heading{{faq_data.faqid}}">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+								data-bs-target="#collapse{{faq_data.faqid}}" aria-expanded="false" aria-controls="collapse{{faq_data.faqid}}">
+								{{faq_data.title}}
+							</button>
+						</h2>
+						<div id="collapse{{faq_data.faqid}}" class="accordion-collapse collapse" aria-labelledby="heading{{faq_data.faqid}}"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<p>
+									{{faq_data.description}}
+								</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>
+{% include 'inc_footer_front.html' %}
+{% include 'inc_files_bottom_front.html' %}
+</body>
+</html>

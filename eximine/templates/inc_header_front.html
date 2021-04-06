@@ -1,0 +1,15 @@
+{% load static %}
+<header class="container-fluid p-2">
+	<div class="container">
+		<div class="logo">
+			<a href="{% url 'home' %}">
+				<img src="{% static 'images/logo.png' %}" />
+			</a>
+		</div>
+		<div>
+			<a href="{% url 'login' %}" class="custom_btn">Login</a>
+			<a href="{% url 'home' %}" class="custom_btn">Register here</a>
+			<a href="{% url 'home' %}" class="text-dark"><i class="fas fa-home"></i></a>
+		</div>
+	</div>
+</header>

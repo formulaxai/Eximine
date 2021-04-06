@@ -1,0 +1,15 @@
+{% autoescape off %}
+Dear {{user.fullname}}
+<br /><br />
+Your Account has almost been created. You are just one step away to log in to your panel. Please click on the given link to confirm your email and activate your account.
+<br />
+<a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{domain}}{% url 'register-complete' uidb64=uid token=token %}" style='color: #1AB1D1;'>Click here to confirm your Email</a>
+<br /><br />
+Link not working for you? Copy the url below into your browser.<br>
+<a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{domain}}{% url 'register-complete' uidb64=uid token=token %}" style='color: #1AB1D1;'>{% if request.is_secure %}https{% else %}http{% endif %}://{{domain}}{% url 'register-complete' uidb64=uid token=token %}</a>
+<br /><br />
+Thanks and Regards
+Eximine
+<br /><br />
+This is an automated email, please do not reply
+{% endautoescape %}

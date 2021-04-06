@@ -1,0 +1,129 @@
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+
+    <!-- Sidebar mobile toggler -->
+    <div class="sidebar-mobile-toggler text-center">
+        <a href="#" class="sidebar-mobile-main-toggle">
+            <i class="icon-arrow-left8"></i>
+        </a>
+        Navigation
+        <a href="#" class="sidebar-mobile-expand">
+            <i class="icon-screen-full"></i>
+            <i class="icon-screen-normal"></i>
+        </a>
+    </div>
+    <!-- /sidebar mobile toggler -->
+
+
+    <!-- Sidebar content -->
+    <div class="sidebar-content">
+
+
+
+
+        <!-- Main navigation -->
+        <div class="card card-sidebar-mobile">
+            <ul class="nav nav-sidebar" data-nav-type="accordion">
+
+                <li class="nav-item-header">
+                    <div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu"
+                        title="Main"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'dashboard' %}" class="nav-link">
+                        <i class="icon-home4"></i>
+                        <span>
+                            Home
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'myprofile' %}" class="nav-link ">
+                        <i class="icon-user"></i>
+                        <span>
+                            My Account
+                        </span>
+                    </a>
+                </li>
+                {% comment %} <li class="nav-item">
+                    <a href="{% url 'myworkspace' %}" class="nav-link ">
+                        <i class="icon-folder"></i>
+                        <span>
+                            My Workspaces
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'mydownloads' %}" class="nav-link ">
+                        <i class="icon-download4"></i>
+                        <span>
+                            Downloads
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'favoriteshipment' %}" class="nav-link ">
+                        <i class="icon-heart5"></i>
+                        <span>
+                            Favorite Shipment
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'subscriptions' %}" class="nav-link ">
+                        <i class="icon-clipboard6"></i>
+                        <span>
+                            Subscription Plan
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'tickets' %}" class="nav-link ">
+                        <i class="icon-ticket"></i>
+                        <span>
+                            Ticket Management
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'mynotifications' %}" class="nav-link ">
+                        <i class="icon-bell2"></i>
+                        <span>
+                            My Notifications
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'accessLog' %}" class="nav-link ">
+                        <i class="icon-server"></i>
+                        <span>
+                            Access Log
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users' %}" class="nav-link ">
+                        <i class="icon-users"></i>
+                        <span>
+                            Users
+                        </span>
+                    </a>
+                </li> {% endcomment %}
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link ">
+                        <i class="icon-exit3"></i>
+                        <span>
+                            Logout
+                        </span>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </div>
+        <!-- /main navigation -->
+
+    </div>
+    <!-- /sidebar content -->
+
+</div>

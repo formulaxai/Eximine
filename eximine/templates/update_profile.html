@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    {% include 'inc_files.html' %}
+</head>
+
+<body>
+    {% include 'inc_header.html' %}
+
+    <div class="page-content">
+
+        {% include 'inc_sidebar.html' %}
+
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-light">
+
+
+                <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+                    <div class="d-flex">
+                        <div class="breadcrumb">
+                            <a href="{% url 'dashboard' %}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>
+                                Home</a>
+                            <span class="breadcrumb-item active">My Profile</span>
+                        </div>
+
+                        <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+                    </div>
+
+                    <div class="header-elements d-none">
+                        <div class="breadcrumb justify-content-center">
+                            <a href="#" class="breadcrumb-elements-item">
+                                <i class="icon-comment-discussion mr-2"></i>
+                                Support
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page header -->
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a href="#basic-justified-tab1" class="nav-link active" data-toggle="tab">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#basic-justified-tab2" class="nav-link" data-toggle="tab">My Team</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                        <a href="#basic-justified-tab3" class="nav-link" data-toggle="tab">Trash</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#basic-justified-tab4" class="nav-link" data-toggle="tab">Database Updates</a>
+                    </li> -->
+
+
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="basic-justified-tab1">
+                                <div class="contianer bg-light p-3">
+                                    <h3 class='mb-3'>User Information</h3>
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex align-items-center">
+                                            <div class='border-2 p-1 rounded-circle'>
+                                                <i class='icon-user icon-2x'></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class='font-weight-bold mb-0'>{{profile_data.fullname}}</p>
+                                                <p class='text-muted'>{{profile_data.email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="col-md-12 mt-3">
+                                                <form action="{% url 'update_profile' profile_data.id %}" method="POST"> {% csrf_token %}
+                                                
+                                                  <input type="hidden" name="id" id="id" value="" required />
+                                                    <div class="row g-2">
+                                                        <div class="input-group col-md-6 mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text border-0 rounded-circle"
+                                                                    id="basic-addon1"><i class='icon-user'></i></span>
+                                                            </div>
+
+                                                            <input type="text"
+                                                                class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0"
+                                                                placeholder="Full Name" value="{{profile_data.fullname}}"
+                                                                aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="input-group col-md-6 mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text border-0 rounded-circle"
+                                                                    id="basic-addon1"><i class='icon-phone2'></i></span>
+                                                            </div>
+                                                            <input type="text"
+                                                                class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0"
+                                                                value="{{ profile_data.phone_number }}" aria-label="Username"
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="input-group col-md-6 mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text border-0 rounded-circle"
+                                                                    id="basic-addon1"><i
+                                                                        class='icon-envelop'></i></span>
+                                                            </div>
+                                                            <input type="text"
+                                                                class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0"
+                                                                value="{{profile_data.email}}" aria-label="Username"
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="input-group col-md-6 mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text border-0 rounded-circle"
+                                                                    id="basic-addon1"><i class='icon-office'></i></span>
+                                                            </div>
+                                                            <input type="text"
+                                                                class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0"
+                                                                value="{{profile_data.companyname}}" aria-label="Username"
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="input-group col-md-6 mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text border-0 rounded-circle"
+                                                                    id="basic-addon1"><i
+                                                                        class='icon-user-tie'></i></span>
+                                                            </div>
+                                                            <input type="text"
+                                                                class="form-control  border-bottom-2 border-top-0 border-left-0 border-right-0"
+                                                                value="{{profile_data.user_type}}" aria-label="Username"
+                                                                aria-describedby="basic-addon1">
+                                                        </div>
+                                                       
+                                                          <div class='col-md-12 d-flex justify-content-end'>
+                                                            <input class='btn btn-warning' type="submit" value='UPDATE'>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+
+
+<script>
+let url_path = window.location.href;
+let url_array = url_path.split("/myprofile");
+const package_id = url_array[url_array.length - 2];
+document.getElementById('id').value = profile_data.id;
+
+function type_change()
+{
+  if($("#user_type").val() == "Other")
+  {
+    $(".type_area").show();
+  }
+  else
+  {
+    $(".type_area").hide();
+  }
+}
+
+</script>
+       
+</body>
+ {% include 'inc_footer.html' %}
+    </div>
+    {% include 'inc_files_bottom.html' %}
+</html>

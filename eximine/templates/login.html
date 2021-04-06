@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include 'inc_files_front.html' %}
+</head>
+{% block body %}
+
+<body>
+<section class="container-fluid  login-content-container">
+<div class="row h-100">
+    <div class="col-md-12 d-flex align-items-center justify-content-center p-5 pb-0">
+        <div class='p-4'>
+            <a href="{% url 'home' %}">
+				<img src="{% static 'images/logo.png' %}" />
+			</a>
+        </div>
+    </div>
+    <div class='col-md-4 col-sm-12 offset-lg-4 custom_bg'>
+        <h4 class='text-center text-light'>Login here</h4>
+        <p class="text-light p-4 pt-2 text-center">Sign In to get all the benefits</p>
+        <form class="row g-3 p-4 pt-0" action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="col-md-12 input-group">
+                <span class="input-group-text bg-light border-0" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                
+                <input type="email" name ='email' class="form-control p-2 border-0" placeholder="Your Email-ID *" aria-describedby="basic-addon1" required />
+            </div>
+            <div class="col-md-12 input-group">
+                <span class="input-group-text bg-light border-0" id="basic-addon1"><i class="fas fa-key"></i></span>
+                <input type="password" name = 'password' class="form-control p-2 border-0" placeholder="Password *" aria-label="password"  aria-describedby="basic-addon1" required />
+            </div>
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                    <label class="form-check-label text-light" for="remember"> Stay signed in </label>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <a href='{% url 'forgot-password' %}' class='text-light text-decoration-none'>Forgot Password ?</a>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <button type="submit" class="custom_btn btn_login w-100">Login</button>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <a href="{% url 'home' %}" class="w-100 text-light text-center text-decoration-none">Register</a>
+            </div>
+        </form>
+
+    <div>
+    
+</div>
+
+</section>
+
+{% endblock body %}
+
+{% include 'inc_files_bottom_front.html' %}
+
+</body>
+</html>

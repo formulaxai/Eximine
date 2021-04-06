@@ -1,0 +1,335 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+{% include 'inc_files.html' %}
+</head>
+<body>
+{% include 'inc_header.html' %}
+
+<div class="page-content">
+
+{% include 'inc_sidebar.html' %}
+
+<div class="content-wrapper">
+
+    <div class="page-header page-header-light">
+
+        <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+            <div class="d-flex">
+                <div class="breadcrumb">
+                    <a href="{% url 'dashboard' %}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <span class="breadcrumb-item active">Search</span>
+                </div>
+
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+
+            <div class="header-elements d-none">
+                <div class="breadcrumb justify-content-center">
+                    <a href="#" class="breadcrumb-elements-item">
+                        <i class="icon-comment-discussion mr-2"></i> Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <div class="container bg-light p-2">
+                    <h3 class='text-center font-weight-bold mb-0'>Search Global Export Import Trade Data Of 78+ Countries</h3>
+                    <p class='text-center font-weight-bold text-danger'>8 Digit HS code varies on the basis of countries,
+                        result may differ for 8 digit HS code with respect to countries</p>
+                    <form action="/search", method="GET">
+                        <div class="form-group row d-md-flex justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text p-0" id="basic-addon1">
+                                        <select class="form-select pt-1 pb-1" aria-label="Default select example">
+                                            {% for search in all_data %}
+                                            <option value="{{search.HS_CODE}}">HS CODE</option>
+                                            {% endfor %}
+                                            <option value="2">Product Name</option>
+                                        </select>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="Search by HS Code">
+                                    <a href="{% url 'search' %}" class='input-group-text' style='background: #ffc107;'>
+                                        <i class='icon-search4'></i>
+                                    </a>
+                                </div>
+        
+                            </div>
+                            <div class="col-lg-2">
+                                <input type="submit" style='background: #ffc107;' class='btn rounded-0 ' value='HS LOCTER'>
+        
+                            </div>
+                        </div>
+                    </form>
+                    <div class='row'>
+                        <div class="col-md-12 d-flex align-items-baseline justify-content-between">
+                            <p>Filters:</p>
+                            <select class="form-select p-1 border-primary" aria-label="Default select example">
+                                <option selected>Export Import</option>
+                                <option value="1">Export</option>
+                                <option value="2">Import</option>
+                            </select>
+                            <select class="form-select p-1" aria-label="Default select example">
+                                <option selected>Reporting Country</option>
+                                
+                            </select>
+                            <select class="form-select p-1" aria-label="Default select example">
+                                <option selected>HS Code</option>
+                            
+                            </select>
+                            <select class="form-select p-1" aria-label="Default select example">
+                                <option selected>Year</option>
+                            
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 bg-light p-2">
+                <h6>
+                    Related Keywords:
+                </h6>
+                <ul class='d-flex justify-content-between flex-row pl-3' style='list-style: none;'>
+                    <li class='text-primary'>ntmero</li>
+                    <li class='text-primary'>avena</li>
+                    <li class='text-primary'>maiz</li>
+                    <li class='text-primary'>modifi</li>
+                    <li class='text-primary'>wheat</li>
+                    <li class='text-primary'>fecha</li>
+                </ul>
+                
+            </div>
+            
+        </div>
+
+        <div class="row mt-3 bg-light ">
+            <div class="col-md-12 p-3 d-flex justify-content-between">
+                <h5 class='font-weight-bold'>
+                    " 11" Export Import Data Found: 29763 Importers | 20331 Exporters | 782407 Shipment Records in 85 Countries
+                    {{ paginator.count }} Import-Export Data Found
+                </h5>
+                <a href="{% url 'export-data' %}" class='text-light'>
+                    <div class='d-flex align-items-center btn btn-success  justify-content-center flex-column'>
+                        <i class='icon-file-excel icon-2x'></i> Download
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-12 d-flex">
+                <div class="d-flex justify-content-between align-items-baseline">
+                    <p class='pb-0'>T3</p>&nbsp;&nbsp;
+                    <i class='icon-stats-bars3'></i>&nbsp;&nbsp;
+                    <i class='icon-user'></i>&nbsp;&nbsp;
+                    <i class='icon-user'></i>
+                </div>
+                <p class='ml-2 text-primary'>14 Countries with Importer and Exporter Name</p>
+            </div>
+
+            <div class="col-md-12">
+                <div class="accordion" id="accordionExample">
+
+                    <div class="card rounded">
+                        <div class="card-header d-flex button_Export justify-content-between align-items-baseline p-2 active_data" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left text-dark  font-weight-bold" type="button">
+                                    Columbia Export (5073)
+                                </button>
+                            </h2>
+                            <div class='d-flex font-weight-bold align-items-center'>
+                                Import ({{ import_count }})&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Export ({{ export_count }})
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show pt-2" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            {% for search in all_data|slice:":1" %}
+                                                <tr class='bg-dark'>
+                                                    {% for field_names in search.get_fields.field_names %}
+                                                    <th class='font-weight-bold' style='min-width: 150px;'>{{ field_names }}</th>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </thead>
+                                        <tbody>
+                                            {% for search in all_data %}
+                                                <tr>
+                                                    {% for values in search.get_fields.values %}
+                                                        {% comment %} {% if values != '' and values != 'None' %} {% endcomment %}
+                                                            <td>{{ values }}</td>
+                                                        {% comment %} {% endif %} {% endcomment %}
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="d-block text-center mt-3">
+                                    <a href="{% url 'login' %}" class="custom_btn btn_login w-100">View More & Refine</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if paginator %}
+                            <div class="pagination mb-3 ml-3 mt-2 d-flex justify-content-center">
+                                <span class="step-links">
+                                    {% if all_data.has_previous %}
+                                        <a href="?HS_CODE={{ request.GET.HS_CODE }}&page=1">&laquo; First</a>
+                                        <a href="?HS_CODE={{ request.GET.HS_CODE }}&page={{ all_data.previous_page_number }}">Previous</a>
+                                    {% endif %}
+
+                                    <span class="current">
+                                        Page {{ all_data.number }} of {{ all_data.paginator.num_pages }}
+                                    </span>
+
+                                    {% if all_data.has_next %}
+                                        <a href="?HS_CODE={{ request.GET.HS_CODE }}&page={{ all_data.next_page_number }}">Next</a>
+                                        <a href="?HS_CODE={{ request.GET.HS_CODE }}&page={{ all_data.paginator.num_pages }}">Last &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card rounded">
+                        <div class="card-header d-flex button_Export justify-content-between align-items-baseline p-2 active_data" id="headingOne" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left text-dark  font-weight-bold" type="button" >
+                                    Columbia Export (5073)
+                                </button>
+                            </h2>
+                            <div class='d-flex font-weight-bold align-items-center'>
+                                Import ({{ import_count }})&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Export ({{ export_count }})
+                            </div>
+                        </div>
+
+                        <div id="collapse2" class="collapse pt-2" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            {% for search in all_data|slice:":1" %}
+                                                <tr class='bg-dark'>
+                                                    {% for field_names in search.get_fields.field_names %}
+                                                    <th class='font-weight-bold' style='min-width: 150px;'>{{ field_names }}</th>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </thead>
+                                        <tbody>
+                                            {% for search in all_data %}
+                                                <tr>
+                                                    {% for values in search.get_fields.values %}
+                                                        {% comment %} {% if values != '' and values != 'None' %} {% endcomment %}
+                                                            <td>{{ values }}</td>
+                                                        {% comment %} {% endif %} {% endcomment %}
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="d-block text-center mt-3">
+                                    <a href="{% url 'login' %}" class="custom_btn btn_login w-100">View More & Refine</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded">
+                        <div class="card-header d-flex button_Export justify-content-between align-items-baseline p-2 active_data" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left text-dark  font-weight-bold" type="button">
+                                    Columbia Export (5073)
+                                </button>
+                            </h2>
+                            <div class='d-flex font-weight-bold align-items-center'>
+                                Import ({{ import_count }})&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Export ({{ export_count }})
+                            </div>
+                        </div>
+
+                        <div id="collapse3" class="collapse pt-2" aria-labelledby="heading3" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            {% for search in all_data|slice:":1" %}
+                                                <tr class='bg-dark'>
+                                                    {% for field_names in search.get_fields.field_names %}
+                                                    <th class='font-weight-bold' style='min-width: 150px;'>{{ field_names }}</th>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </thead>
+                                        <tbody>
+                                            {% for search in all_data %}
+                                                <tr>
+                                                    {% for values in search.get_fields.values %}
+                                                        {% comment %} {% if values != '' and values != 'None' %} {% endcomment %}
+                                                            <td>{{ values }}</td>
+                                                        {% comment %} {% endif %} {% endcomment %}
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+
+                                <div class="d-block text-center mt-3">
+                                    <a href="{% url 'login' %}" class="custom_btn btn_login w-100">View More & Refine</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /content area -->
+
+
+    <!-- Footer -->
+    <div class="navbar navbar-expand-lg navbar-light">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                data-target="#navbar-footer">
+                <i class="icon-unfold mr-2"></i>
+                Footer
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-footer">
+            <span class="navbar-text">
+                &copy; 2021 Eximine
+            </span>
+
+
+        </div>
+    </div>
+    
+</div>
+
+</div>
+</body>
+{% include 'inc_files_bottom.html' %}
+</html>
