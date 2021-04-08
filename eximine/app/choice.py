@@ -120,7 +120,7 @@ COUNTRIES_CHOICE = (
     ('HU', _('Hungary')),
     ('IS', _('Iceland')),
     ('IN', _('India')),
-    ('ID', _('Indonesia')),
+    ('Indonesia', _('Indonesia')),
     ('IR', _('Iran, Islamic Republic of')),
     ('IQ', _('Iraq')),
     ('IE', _('Ireland')),

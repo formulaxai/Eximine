@@ -52,6 +52,7 @@ from django.core.mail import EmailMultiAlternatives
 # import razorpay
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db.models import Count
 from functools import reduce
 import operator
 import openpyxl
@@ -85,7 +86,6 @@ def dashboard(request):
         messages.error(request,'Please login first!')
         return redirect("login")
     countries_object = countries.objects.all().distinct()
-    print("countries_object", countries_object)
     data = registrations.objects.get(id=request.session['id'])
     return render(request, 'dashboard.html', {"data":data, 'countries_object': countries_object})
 
@@ -394,43 +394,61 @@ def myprofile(request):
     
     return render(request, 'myprofile.html', {"data":data})
 
+
 def search(request):
-    
     if 'id' not in request.session:
         messages.error(request,'Please login first!')
         return redirect("login")
-
-    filter_names = ('HS_CODE',)
-
-    filter_clauses = [Q(**{filter: request.GET[filter]})
-                    for filter in filter_names
-                    if request.GET.get(filter)]
-
-    export_count = importexportdata.objects.filter(TYPE='EXPORT')
-    if filter_clauses:
-        export_count = export_count.filter(reduce(operator.and_, filter_clauses))
-    export_count = export_count.count()
-    if export_count == '':
-        export_count = 0
-    
-    import_count = importexportdata.objects.filter(TYPE='IMPORT')
-    if filter_clauses:
-        import_count = import_count.filter(reduce(operator.and_, filter_clauses))
-    import_count = import_count.count()
-    if import_count == '':
-        import_count = 0
-
-    data_list = importexportdata.objects.all().order_by('-id')
-    if filter_clauses:
-        data_list = data_list.filter(reduce(operator.and_, filter_clauses))
+    search_type = request.POST['universal_search']
+    search_field = request.POST['HS_CODE']
+    if search_type == '1':
+        data_list = importexportdata.objects.filter(HS_CODE=search_field)
+        export_count = importexportdata.objects.filter(TYPE='EXPORT', HS_CODE=search_field).count()
+        import_count = importexportdata.objects.filter(TYPE='IMPORT', HS_CODE=search_field).count()
+    else:
+        data_list = importexportdata.objects.filter(HS_CODE_DESCRIPTION=search_field)
+        export_count = importexportdata.objects.filter(TYPE='EXPORT', HS_CODE_DESCRIPTION=search_field).count()
+        import_count = importexportdata.objects.filter(TYPE='IMPORT', HS_CODE_DESCRIPTION=search_field).count()
     paginator = Paginator(data_list, 50) # Show 50 records per page.
-
     page_number = request.GET.get('page')
     all_data = paginator.get_page(page_number)
-
     data = registrations.objects.get(id=request.session['id'])
-    
     return render(request, 'search.html', {'data':data, 'all_data':all_data, 'paginator':paginator, 'export_count':export_count, 'import_count':import_count})
+
+
+def search_hot_products(request):
+    if 'id' not in request.session:
+        messages.error(request,'Please login first!')
+        return redirect("login")
+    search_type = 'IMPORT' if request.POST['search_type'] == "1" else 'EXPORT'
+    search_country = request.POST['search_country']
+    search_usd = request.POST['search_usd']
+    hs_code_len = request.POST['hs_code_len']
+    search_by_group_by = request.POST['search_by_group_by']
+    
+    data_list = importexportdata.objects.filter(
+        Q(TYPE=search_type) & Q(COUNTRY=search_country)
+    )
+
+    print("#"*100, data_list)
+    return HttpResponse("Ok")
+
+
+def search_hot_companies(request):
+    if 'id' not in request.session:
+        messages.error(request,'Please login first!')
+        return redirect("login")
+    search_type = 'IMPORT' if request.POST['search_type_tab4'] == "1" else 'EXPORT'
+    search_country = request.POST['search_country_tab4']
+    search_usd = request.POST['search_usd_tab4']
+
+    data_list = importexportdata.objects.filter(
+        Q(TYPE=search_type) & Q(COUNTRY=search_country)
+    )
+
+    print("#"*100, data_list)
+    return HttpResponse("Ok")
+
 
 def advancesearch(request):
     filter = {}

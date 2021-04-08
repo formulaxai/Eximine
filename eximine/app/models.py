@@ -1,5 +1,5 @@
 from django.db import models
-
+from .choice import COUNTRIES_CHOICE
 # Create your models here.
 # adding manualy  library
 from django.db import models
